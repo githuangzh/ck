@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.will.bussiness.system.dao.ISysResourceDao">
+	<resultMap type="SysResource" id="resources" autoMapping="true">
+		<id column="dbid" property="dbid" />
+		<result column="resid" property="resid"/>
+	</resultMap>
+	<select id="findSysResourceByUserId" resultMap="resources">
+		<![CDATA[
+			SELECT T3.* FROM sys_resource T3 
+				WHERE EXISTS 
+				(SELECT T2.* FROM sys_role_resources T2 
+					WHERE roleid in (SELECT roleid FROM sys_user_role WHERE userid = #{userid}) 
+						  AND T3.resid = T2.resid) ORDER BY ordernum
+		]]>
+	</select>
+	
+	<select id="findSysResourceByPage" resultMap="resources">
+		<![CDATA[
+			SELECT * FROM sys_resource
+		]]>
+		<where>
+			<if test="resource.resid != null">
+				resid like CONCAT('%',#{resource.resid},'%')
+			</if>
+			<if test="resource.resname != null">
+				AND resname like CONCAT('%',#{resource.resname},'%')
+			</if>
+ 		</where>
+	</select>
+	
+	<select id="findSysResourceByDbid" parameterType="SysResource" resultType="SysResource">
+		<![CDATA[
+			SELECT * FROM sys_resource where dbid = #{dbid}
+		]]>
+	</select>
+	
+	<select id="findSysResourceByRoleCount" parameterType="SysResource" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT count(1) FROM sys_role_resources WHERE resid = #{resid};
+		]]>
+	</select>
+	<insert id="addSysResource" useGeneratedKeys="true" parameterType="SysResource">
+		<selectKey keyProperty="dbid" resultType="int" order="AFTER">
+			<![CDATA[SELECT LAST_INSERT_ID()]]>
+		</selectKey>
+		<![CDATA[INSERT INTO sys_resource VALUES(#{dbid},#{resid},#{resname},#{parentid},#{url},#{icon},#{ordernum})]]>
+	</insert>
+	
+	<update id="updateResource" parameterType="SysResource">
+		<![CDATA[UPDATE sys_resource SET resid = #{resid},resname = #{resname},parentid = #{parentid},url = #{url},
+				icon = #{icon},ordernum = #{ordernum}]]>
+	</update>
+	
+	<delete id="deleteResource" parameterType="SysResource">
+		<![CDATA[delete from sys_resource where dbid = #{dbid}]]>
+	</delete>
+	
+	<select id="getResourceTopid" resultType="String">
+		<![CDATA[select resid from sys_resource where parentid = 'root' or parentid IS NULL]]>
+	</select>
+	
+	<select id="findSysResourceByResid" resultType="SysResource" >
+		<![CDATA[SELECT * FROM sys_resource WHERE resid = #{resid}]]>
+	</select>
+	
+	<select id="findSysResourceByResname" resultType="SysResource">
+		<![CDATA[SELECT * FROM sys_resource WHERE resname = #{resname}]]>
+	</select>
+</mapper>

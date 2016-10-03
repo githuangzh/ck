@@ -1,0 +1,6 @@
+\WebRoot\WEB-INF\classes
+\.myeclipse
+\.settings
+.classpath
+.mymetadata
+.project

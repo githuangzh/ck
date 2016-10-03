@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.will.bussiness.system.dao.ISysRoleDao">
+	<resultMap type="SysRole" id="roleResult" autoMapping="true">
+		<id column="dbid" property="dbid"/>
+	</resultMap>
+	<resultMap type="SysUser" id="userResult" autoMapping="true"></resultMap>
+	<resultMap type="SysStaff" id="staffResult" autoMapping="true">
+		<id property="dbid" column="dbid" />
+		<result property="userid" column="userid"/>
+		<association property="user" resultMap="userResult" columnPrefix="u_"></association>
+	</resultMap>
+	<resultMap type="SysResource" id="resources" autoMapping="true">
+		<id column="dbid" property="dbid" />
+		<result column="resid" property="resid"/>
+	</resultMap>
+	
+	<select id="findRolesByUserid" resultMap="roleResult">
+		<![CDATA[
+			SELECT T1.* FROM sys_role T1 INNER JOIN sys_user_role T2 ON T1.roleid = T2.roleid WHERE T2.userid = #{userid}
+		]]>
+	</select>
+	
+	<select id="findSysRoleByPage" resultMap="roleResult">
+		<![CDATA[
+			SELECT * FROM sys_role 
+		]]>
+		<where>
+			<if test="role.roleid != null">
+				roleid like CONCAT('%',#{role.resid},'%')
+			</if>
+			<if test="role.rolename != null">
+				AND rolename like CONCAT('%',#{role.rolename},'%')
+			</if>
+		</where>
+	</select>
+	
+	<insert id="addRole" parameterType="SysRole" useGeneratedKeys="true" >
+		<selectKey keyProperty="dbid" resultType="int" order="AFTER">
+			<![CDATA[SELECT LAST_INSERT_ID()]]>
+		</selectKey>
+		<![CDATA[INSERT INTO sys_role VALUES(#{dbid},#{roleid},#{rolename})]]>
+	</insert>
+	
+	<update id="updateRole" parameterType="SysRole">
+		<![CDATA[UPDATE sys_role SET dbid = #{dbid},roleid = #{roleid},rolename = #{rolename}]]>
+	</update>
+	
+	<delete id="removeRole" parameterType="SysRole">
+		<![CDATA[DELETE FROM sys_role WHERE dbid = #{dbid}]]>
+	</delete>
+	
+	<delete id="removeRoleWithResource" parameterType="SysRole">
+		<![CDATA[DELETE FROM sys_role_resources WHERE roleid = #{roleid}]]>
+	</delete>
+	
+	<delete id="removeRoleWithUser" parameterType="SysRole">
+		<![CDATA[DELETE FROM sys_user_role WHERE roleid = #{roleid}]]>
+	</delete>
+	
+	<insert id="addRoleWithUserByArray" useGeneratedKeys="true">
+		<selectKey keyProperty="dbid" resultType="int" order="AFTER">
+			<![CDATA[SELECT LAST_INSERT_ID()]]>
+		</selectKey>
+		<![CDATA[INSERT INTO sys_user_role VALUES]]>
+		<foreach collection="userIds" item="userid" index="index" open="(" close=")" separator=",">
+			#{dbid},#{role.roleid},#{userid}
+		</foreach>
+	</insert>
+	
+	<insert id="addRoleWithResourceByArray" useGeneratedKeys="true"> 
+		<selectKey keyProperty="dbid" resultType="int" order="AFTER">
+			<![CDATA[SELECT LAST_INSERT_ID()]]>
+		</selectKey>
+		<![CDATA[INSERT INTO sys_role_resources VALUES]]>
+		<foreach collection="resIds" item="resid" index="index" open="(" close=")" separator=",">
+			#{dbid},#{role.roleid},#{resid}
+		</foreach>
+	</insert>
+	
+	<select id="findRoleWithUser" resultMap="staffResult">
+		<![CDATA[SELECT userid from sys_user_role where roleid = #{roleid}]]>
+	</select>
+	
+	<select id="findRoleWithResurce" resultMap="resources">
+		<![CDATA[SELECT resid from sys_role_resources where roleid = #{roleid}]]>
+	</select>
+	
+	<select id="findSysRoleByRoleid" resultType="SysRole">
+		<![CDATA[SELECT * FROM sys_role WHERE roleid = #{roleid}]]>
+	</select>
+	
+	<select id="findSysRoleByDbid" resultType="SysRole">
+		<![CDATA[SELECT * FROM sys_role WHERE dbid = #{dbid}]]>
+	</select>
+</mapper>

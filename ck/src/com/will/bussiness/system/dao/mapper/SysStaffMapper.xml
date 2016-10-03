@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.will.bussiness.system.dao.ISysStaffDao">
+	<resultMap type="SysUser" id="userResult" autoMapping="true"></resultMap>
+	<resultMap type="SysStaff" id="staffResult" autoMapping="true">
+		<id property="dbid" column="dbid" />
+		<result property="userid" column="userid"/>
+		<association property="user" resultMap="userResult" columnPrefix="u_"></association>
+	</resultMap>
+	
+	<select id="findSysStaffByPage" resultMap="staffResult">
+		<![CDATA[SELECT T1.dbid,T1.userid,T2.userid u_userid,gender,home,idcard,phone,email,qq,pay,T2.username u_username,T2.`password` u_password FROM sys_staff T1 INNER JOIN sys_user T2 ON T1.userid = T2.userid]]>
+		<where>
+			<if test="staff.userid != null">
+				T1.userid LIKE CONCAT('%',#{staff.userid},'%')
+			</if>
+			<if test="staff.user != null">
+				<if test="staff.user.username != null">
+					AND T2.username LIKE CONCAT('%',#{staff.user.username},'%')
+				</if>
+			</if>
+		</where>
+		
+	</select>
+	<select id="findSysStaffByIdCard" resultType="SysStaff">
+		<![CDATA[SELECT T1.dbid,T1.userid,gender,home,idcard,phone,email,qq,pay,T2.username,T2.`password` FROM sys_staff T1 INNER JOIN sys_user T2 ON T1.userid = T2.userid]]>
+		<where>
+			idcard = #{idcard}
+		</where>
+	</select>
+	<select id="findSysStaffByDbid" resultMap="staffResult" parameterType="SysStaff">
+		<![CDATA[SELECT T1.dbid,T1.userid,T2.userid u_userid,gender,home,idcard,phone,email,qq,pay,T2.username u_username,T2.`password` u_password FROM sys_staff T1 INNER JOIN sys_user T2 ON T1.userid = T2.userid]]>
+		<where>
+			<if test="dbid != 0">
+				T1.dbid = #{dbid}
+			</if>
+		</where>
+	</select>
+	<insert id="addSysStaff" useGeneratedKeys="true" parameterType="SysStaff">
+		<selectKey keyProperty="dbid" resultType="int"  order="AFTER">
+			<![CDATA[SELECT LAST_INSERT_ID()]]>
+		</selectKey>
+		<![CDATA[INSERT INTO sys_staff VALUES(#{dbid},#{userid},#{gender},#{home},#{idcard},#{phone},#{email},#{qq},#{pay})]]>
+	</insert>
+	
+	<update id="updateSysStaff" parameterType="SysStaff">
+		<![CDATA[UPDATE sys_staff SET userid = #{userid},gender = #{gender},home = #{home},idcard = #{idcard},
+				phone = #{phone},email = #{email},qq = #{qq}
+		]]>
+		<where>
+			dbid = #{dbid}
+		</where>
+	</update>
+	
+	<update id="updateSysUserName" parameterType="SysStaff">
+		<![CDATA[UPDATE sys_user SET username = #{user.username}]]>
+		<where>
+			userid = #{userid}
+		</where>
+	</update>
+	
+	<update id="updateStaffPay" parameterType="SysStaff">
+		<![CDATA[UPDATE sys_staff SET pay = #{pay}]]>
+		<where>
+			dbid = #{dbid}
+		</where>
+	</update>
+	
+	<delete id="removeStaff" parameterType="SysStaff">
+		<![CDATA[delete from sys_staff where dbid = #{dbid}]]>
+	</delete>
+	
+</mapper>

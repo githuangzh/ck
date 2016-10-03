@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.will.bussiness.system.dao.ISysUserDao">
+	<resultMap type="SysUser" id="userResult" autoMapping="true">
+		<id property="dbid" column="dbid"/>
+		<result property="userid" column="userid"/>
+	</resultMap>
+	
+	
+	<select id="findByUserid" resultType="SysUser">
+		SELECT * FROM SYS_USER
+		<where>userid = #{userid}</where>
+	</select>
+	
+	<select id="findUserByPage" resultType="SysUser">
+		SELECT * FROM SYS_USER
+	</select>
+	
+	<update id="updateUserid" parameterType="SysUser">
+		UPDATE sys_user set userid = #{userid} where dbid = #{dbid} 
+	</update>
+	
+	<insert id="addSysUser" useGeneratedKeys="true" parameterType="SysUser">
+		<selectKey keyProperty="dbid" resultType="int"  order="AFTER">
+			<![CDATA[SELECT LAST_INSERT_ID()]]>
+		</selectKey>
+		<![CDATA[INSERT INTO sys_user VALUES(#{dbid},#{userid},#{username},#{password})]]>
+	</insert>
+	
+	<delete id="removeSysUser" parameterType="SysUser">
+		<![CDATA[DELETE FROM sys_user where userid = #{userid}]]>
+	</delete>
+</mapper>
