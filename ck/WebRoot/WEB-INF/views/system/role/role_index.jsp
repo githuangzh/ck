@@ -11,7 +11,7 @@ String commonContextPath = contextPath+"/resource";
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="仓库管理">
-	<meta http-equiv="description" content="This is my page">
+	<meta http-equiv="description" content="仓库管理--黄志浩毕业设计 13131404">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<script type="text/javascript" src="<%=commonContextPath%>/js/system/role_index.js"></script>
   </head>
@@ -27,7 +27,7 @@ String commonContextPath = contextPath+"/resource";
 	            <label for="resid_s">角色名称</label>
 	            <input type="text" class="form-control" name="rolename" id="rolename_s" placeholder="请输入名称">
 	        </div>
-        	<button id="search" type="button" class="btn btn-info">搜索</button>
+        	<button id="searchRole" type="button" class="btn btn-info">搜索</button>
         	<button id="addRoleBtn" type="button" class="btn btn-default">添加角色</button>
 	    </form>
 	</div>

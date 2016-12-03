@@ -30,7 +30,7 @@ function removeUser(o,dbid){
 
 function updateResource(dbid){
 	var url = __CONTEXT_PATH+"/resource/init.html?dbid="+dbid;
-	openWinWith(url,0,500,120,750);
+	openWinWith(url,dbid,500,120,750);
 };
 
 
@@ -135,7 +135,7 @@ $(function(){
 	});
 	
 	
-	$("#search").click(function(){
+	$("#searchResource").click(function(){
 	 	params = encodeURI($("#custom-toolbar_res .form-inline").serialize());
 		$('#table-javascript_res').bootstrapTable('refresh',{url:__CONTEXT_PATH+"/resource/list.json?"+params});
 	});

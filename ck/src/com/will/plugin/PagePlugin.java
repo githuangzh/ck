@@ -125,8 +125,9 @@ public class PagePlugin implements Interceptor {
 	private void setPageParameter(String sql, Connection connection,
 			MappedStatement mappedStatement, BoundSql boundSql,
 			Pagination pagination) {
-		System.out.println(sql);
+		//System.out.println(sql);
 		String countSql = "select count(0) count from ("+sql+") total";
+		System.out.println(countSql);
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {

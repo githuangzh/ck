@@ -173,7 +173,7 @@ $(function(){
 	});
 	
 	
-	$("#search").click(function(){
+	$("#searchUser").click(function(){
 	 	params = encodeURI($("#custom-toolbar_user .form-inline").serialize());
 		$('#table-javascript_user').bootstrapTable('refresh',{url:__CONTEXT_PATH+"/user/list.json?"+params});
 	});

@@ -29,7 +29,7 @@
 		]]>
 		<where>
 			<if test="role.roleid != null">
-				roleid like CONCAT('%',#{role.resid},'%')
+				roleid like CONCAT('%',#{role.roleid},'%')
 			</if>
 			<if test="role.rolename != null">
 				AND rolename like CONCAT('%',#{role.rolename},'%')

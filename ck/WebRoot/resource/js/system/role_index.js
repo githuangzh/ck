@@ -110,7 +110,7 @@ $(function(){
 	});
 	
 	
-	$("#search").click(function(){
+	$("#searchRole").click(function(){
 	 	params = encodeURI($("#custom-toolbar_role .form-inline").serialize());
 		$('#table-javascript_role').bootstrapTable('refresh',{url:__CONTEXT_PATH+"/role/list.json?"+params});
 	});
