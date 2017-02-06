@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.will.bussiness.ck.dao.ISysStaffDao;
+import com.will.bussiness.ck.dao.IRlStaffDao;
 import com.will.bussiness.common.Constant;
 import com.will.bussiness.system.dao.ISysUserDao;
 import com.will.bussiness.system.entity.SysUser;
@@ -45,7 +45,7 @@ public class UserServiceImpl implements IUserService {
 		}else{
 			result = new Result(Result.FAILURE,"请输入用户名");
 		}
-		if(user != null){
+		if(sysuser != null){
 			message.put("userid", "用户名已存在");
 			result = new Result(Result.FAILURE, 40102, message);
 		}
@@ -60,7 +60,7 @@ public class UserServiceImpl implements IUserService {
 				try {
 					SysUser sysUser = new SysUser();
 					sysUser.setUserid(user.getUserid());
-					sysUser.setPassword(MD5String.getMD5Str(user.getPassword()));
+					sysUser.setPassword(MD5String.getMD5Str("123456"));
 					//初始新建用户为禁用模式
 					sysUser.setStatus(Constant.STATUS_DISABLED);
 					sysUser.setStaffid(user.getStaffid());
@@ -87,7 +87,6 @@ public class UserServiceImpl implements IUserService {
 			}
 			if(result.isSucc()){
 				usr.setUserid(user.getUserid());
-				usr.setPassword(MD5String.getMD5Str(user.getPassword()));
 				usr.setStaffid(user.getStaffid());
 				usr.setStatus(user.getStatus());
 				try {
@@ -105,7 +104,28 @@ public class UserServiceImpl implements IUserService {
 	public SysUser findUserByDbid(SysUser user){
 		return userDao.findUserByDbid(user.getDbid());
 	}
-	
+
+	public Result updatePassword(SysUser user,String newpwd) {
+		HashMap<String, String> message = new HashMap<String, String>();
+		Result result = new Result("修改密码成功！");
+		SysUser usr = userDao.findUserByDbid(user.getDbid());
+		if(user.getPassword().equals(newpwd)){
+			result = new Result(Result.FAILURE, "新密码与旧密码相同请重新输入");
+			return result;
+		}
+		if(!MD5String.getMD5Str(user.getPassword()).equals(usr.getPassword())){
+			result = new Result(Result.FAILURE, "旧密码输入有误");
+			return result;
+		}
+		usr.setPassword(MD5String.getMD5Str(newpwd));
+		try {
+			userDao.updateSysUser(usr);
+		} catch (ResultException e) {
+			logger.error(e.getMessage()+"\n=========修改密码失败,数据或数据库异常");
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	
 }

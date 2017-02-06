@@ -11,9 +11,9 @@ String commonContextPath = contextPath+"/resource";
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="仓库管理">
-	<meta http-equiv="description" content="This is my page">
+	<meta http-equiv="description" content="修改密码">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<script type="text/javascript" src="<%=commonContextPath%>/js/system/user_add.js"></script>
+	<script type="text/javascript" src="<%=commonContextPath%>/js/system/user_pwd.js"></script>
   </head>
   <style>
   	.container{
@@ -38,12 +38,17 @@ String commonContextPath = contextPath+"/resource";
     <div class="container">
         <form class="form-horizontal" id="query_form">
         <input type="hidden" name="dbid" value="${data.dbid}">
-        <input type="hidden" name="status" value="${data.status}">
             <fieldset>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">账号:</label>
+                    <label class="col-md-3 control-label">旧密码:</label>
                     <div class="col-md-8 control-group">
-                    	<input type="text" class="form-control" name="userid" id="userid_edit" placeholder="请输入账号" value="${data.userid}">
+                    	<input type="password" class="form-control" name="password" id="oldpwd" placeholder="请输入旧密码" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">新密码:</label>
+                    <div class="col-md-8 control-group">
+                    	<input type="password" class="form-control" name="newpwd" id="newpwd" placeholder="请输入新密码" >
                     </div>
                 </div>
             </fieldset>

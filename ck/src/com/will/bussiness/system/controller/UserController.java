@@ -87,10 +87,22 @@ public class UserController {
 	@ResponseBody
 	public Result updateUserByStatus(HttpServletRequest request,SysUser user){
 		SysUser usr = usersrv.findUserByDbid(user);
-		usr.setStatus(user.getStatus());
+		usr.setStatus(~usr.getStatus()+2);
 		return usersrv.addSysUser(usr);
 	}
 	
+	@RequestMapping("/updatepwd.html")
+	public String updatePassword(SysUser user,ModelMap model){
+		SysUser usr = usersrv.findUserByDbid(user);
+		model.addAttribute("data", usr);
+		return "system/user_pwd";
+	}
+	
+	@RequestMapping("/updatepwd.json")
+	@ResponseBody
+	public Result updatePassword(SysUser user,String newpwd,HttpServletRequest request){
+		return usersrv.updatePassword(user, newpwd);
+	}
     //TODO -- 关联员工	
 	
 }

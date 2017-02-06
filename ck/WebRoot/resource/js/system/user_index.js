@@ -1,6 +1,12 @@
-function removeUser(o,dbid){
-	var url = __CONTEXT_PATH+"/user/remove.json?dbid="+dbid;
-	$(o).confirmation({animation:true,title:'确定删除吗?',href:'javascript:void(0)',template:$("#confirm_hzh").html(),singleton: false
+function updateStatus(o,dbid,status){
+	var url = __CONTEXT_PATH+"/user/status.json?dbid="+dbid;
+	var str;
+	if(status){
+		str='启用';
+	}else{
+		str='禁用';
+	}
+	$(o).confirmation({animation:true,title:'确定'+str+'吗?',href:'javascript:void(0)',template:$("#confirm_hzh").html(),singleton: false
 		, popout: false
 		, onConfirm: function(){}
 		, onCancel: function(){}});
@@ -16,7 +22,7 @@ function removeUser(o,dbid){
 			success:function(data){
 				if(data.succ){
 					$.scojs_message(data.msg, $.scojs_message.TYPE_OK,2000);
-					$('#table-javascript').bootstrapTable('refresh',{url:__CONTEXT_PATH+"/user/list.json"});
+					$('#table-javascript_user').bootstrapTable('refresh',{url:__CONTEXT_PATH+"/user/list.json"});
 				}else{
 					$.scojs_message(data.msg, $.scojs_message.TYPE_ERROR,2000);
 				}
@@ -30,12 +36,11 @@ function removeUser(o,dbid){
 
 function updateUser(dbid){
 	var url = __CONTEXT_PATH+"/user/init.html?dbid="+dbid;
-	openWinWith(url, dbid,960,120,500);
+	openWinWith(url,1,460,220,700);
 };
-
-function updatePay(index,dbid){
-	var url = __CONTEXT_PATH+"/user/updatepay.html?dbid="+dbid;
-	openWinWith(url, dbid,500,160,750);
+function updatepwd(dbid){
+	var url = __CONTEXT_PATH+"/user/updatepwd.html?dbid="+dbid; 
+	openWinWith(url,0,460,220,700);
 }
 
 function openWinWith(url,id,width,top,left){
@@ -55,7 +60,7 @@ function openWinWith(url,id,width,top,left){
 				}
 				if(submitForm($btn)){
 					addUsermodal.close();
-					$('#table-javascript').bootstrapTable('refresh',{url:__CONTEXT_PATH+"/user/list.json"});
+					$('#table-javascript_user').bootstrapTable('refresh',{url:__CONTEXT_PATH+"/user/list.json"});
 				}
 			}
 		});
@@ -91,11 +96,11 @@ $(function(){
             align: 'right',
             valign: 'middle',
         },{
-            field: 'user.username',
-            title: '姓名',
+            field: 'staffid',
+            title: '关联工号',
             align: 'right',
             valign: 'middle',
-        },{
+        },/*{
             field: 'gender',
             title: '性别',
             align: 'right',
@@ -115,38 +120,25 @@ $(function(){
             		return a;
             	}
             }
-        }/*, {
-            field: 'home',
-            title: '籍贯',
+        }*/{
+        	field: 'status',
+            title: '状态',
             align: 'center',
             valign: 'middle',
-        }*/,{
-        	field: 'idcard',
-            title: '身份证',
-            align: 'center',
-            valign: 'middle',
-        },{
-        	field: 'phone',
-            title: '手机号',
-            align: 'center',
-            valign: 'middle',
-        },{
-        	field: 'email',
-            title: '电子邮箱',
-            align: 'center',
-            valign: 'middle',
-        },{
-        	field: 'qq',
-            title: 'QQ号',
-            align: 'center',
-            valign: 'middle',
-        },{
-        	field: 'pay',
-            title: '工资',
-            align: 'center',
-            valign: 'middle',
+            sortable: true,
             formatter:function(value,row,index){
-            	return value + ".00";
+            	if(value == 1){
+            		return '<font color="red">禁用</font>';
+            	}else{
+            		return '<font color="green">启用</font>';
+            	}
+            },
+            sorter:function(a,b){
+            	if(b > a){
+            		return b;
+            	}else{
+            		return a;
+            	}
             }
         },{
         	field:'operate',
@@ -155,11 +147,18 @@ $(function(){
         	valign: 'middle',
         	formatter:function(value,row,index){
         		if(row.userid == 'huangzh'){
-        			return "<a class='t_operate' onclick='updatePay("+index+","+row.dbid+")'><i class='icon-credit-card'></i>工资</a>";
+        			return "";
         		}else{
-        			return "<a class='t_operate' onclick='updateUser("+row.dbid+")'><i class='icon-edit'></i>编辑</a>"
-            	       +"<a class='t_operate' onclick='removeUser(this,"+row.dbid+")'><i class='icon-remove-sign' ></i>删除</a>" 
-            	       +"<a class='t_operate' onclick='updatePay("+index+","+row.dbid+")'><i class='icon-credit-card'></i>工资</a>";
+        			if(row.status == 1){
+        				return "<a class='t_operate' onclick='updateUser("+row.dbid+")'><i class='icon-edit'></i>编辑</a>"
+        				+"<a class='t_operate' onclick='updatepwd("+row.dbid+")'><i class='icon-credit-card'></i>修改密码</a>"
+             	       +"<a class='t_operate' onclick='updateStatus(this,"+row.dbid+","+row.status+")'><i class='icon-remove-sign' ></i>启用</a>" ;
+        			}else{
+        				return "<a class='t_operate' onclick='updateUser("+row.dbid+")'><i class='icon-edit'></i>编辑</a>"
+        				+"<a class='t_operate' onclick='updatepwd("+row.dbid+")'><i class='icon-credit-card'></i>修改密码</a>"
+              	       +"<a class='t_operate' onclick='updateStatus(this,"+row.dbid+","+row.status+")'><i class='icon-remove-sign' ></i>禁用</a>" ;
+        			}
+        			
         		}
             	
             },
@@ -169,7 +168,7 @@ $(function(){
 	
 	$("#addUserBtn").click(function(){
 		var url = __CONTEXT_PATH+"/user/init.html?dbid=0";
-		openWinWith(url,0,960,120,500);
+		openWinWith(url,0,460,220,700);
 	});
 	
 	

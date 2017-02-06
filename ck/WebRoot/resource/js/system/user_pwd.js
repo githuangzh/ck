@@ -10,7 +10,8 @@ function Mypopover(id,content,placement,isAnimation){
 function submitForm($btn){
 	var flag = true;
 	var valid = $.scojs_valid('#query_form',{wrapper:'div.control-group',
-								rules:{userid:['not_empty']
+								rules:{password:['not_empty'],
+									newpwd:['not_empty']
 								},model:'tooltip'});
 	flag =  valid.validate();
 	if(flag){
@@ -19,21 +20,11 @@ function submitForm($btn){
 			async:false,
 			data:$('#query_form').serializeArray(),
 			dataType:'json',
-			url:__CONTEXT_PATH+"/user/add.json",
+			url:__CONTEXT_PATH+"/user/updatepwd.json",
 			success:function(data){
-				var code = data.statusCode;
 				var msg = data.msg;
-				if(code == 200){
+				if(data.succ){
 					$.scojs_message(msg, $.scojs_message.TYPE_OK,2000);
-				}else if(code == 300){
-					return flag;
-				}else if(code == 40102){
-					var text = data.data.userid;
-					Mypopover("#userid_edit",text,'top',false);
-					$("#userid_edit").focus(function(){
-						$("#userid_edit").popover('destroy');
-					});
-					flag = false;
 				}else{
 					$.scojs_message(msg, $.scojs_message.TYPE_ERROR,2000);
 				}

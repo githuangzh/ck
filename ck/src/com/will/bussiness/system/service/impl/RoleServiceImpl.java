@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.filenet.api.core.Factory.User;
 import com.mysql.jdbc.jdbc2.optional.SuspendableXAConnection;
-import com.will.bussiness.ck.dao.ISysStaffDao;
+import com.will.bussiness.ck.dao.IRlStaffDao;
 import com.will.bussiness.common.Constant;
 import com.will.bussiness.system.dao.ISysResourceDao;
 import com.will.bussiness.system.dao.ISysRoleDao;

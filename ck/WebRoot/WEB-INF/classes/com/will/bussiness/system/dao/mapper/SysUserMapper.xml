@@ -19,14 +19,14 @@
 		<where>dbid = #{dbid}</where>
 	</select>
 	
-	<select id="findUserByPage" resultType="userResult">
+	<select id="findUserByPage" resultMap="userResult">
 		<![CDATA[SELECT T.dbid,T.userid,T.staffid,T.status FROM SYS_USER T]]>
 		<where>
 			<if test="user.userid != null">
 				T.userid LIKE CONCAT('%',#{user.userid},'%')
 			</if>
 			<if test="user.staffid != null">
-				T.staffid LIKE CONCAT('%',#{user.staffid},'%')
+				AND T.staffid LIKE CONCAT('%',#{user.staffid},'%')
 			</if>
 		</where>
 	</select>

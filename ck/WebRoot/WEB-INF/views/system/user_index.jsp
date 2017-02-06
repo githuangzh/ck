@@ -24,8 +24,8 @@ String commonContextPath = contextPath+"/resource";
 	            <input type="text" class="form-control" name="userid" id="userid_s" placeholder="请输入账号">
 	        </div>
 	        <div class="form-group">
-	            <label for="username_s">姓名</label>
-	            <input type="text" class="form-control" name="user.username" id="username_s" placeholder="请输入姓名">
+	            <label for="staffid_s">工号</label>
+	            <input type="text" class="form-control" name="staffid" id="staffid_s" placeholder="请输入工号">
 	        </div>
         	<button id="searchUser" type="button" class="btn btn-info">搜索</button>
         	<button id="addUserBtn" type="button" class="btn btn-default">添加用户</button>

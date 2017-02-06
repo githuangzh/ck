@@ -12,32 +12,32 @@ import com.will.utility.Pagination;
 import com.will.utility.SupperMapper;
 
 @SupperMapper
-public interface ISysStaffDao {
+public interface IRlStaffDao {
 	/**
 	 * 查询员工--表格
 	 * @param pagination
 	 * @return
 	 */
-	public List<RlStaff> findSysStaffByPage(@Param("page")Pagination<RlStaff> pagination,@Param("staff")RlStaff staff);
+	public List<RlStaff> findRlStaffByPage(@Param("page")Pagination<RlStaff> pagination,@Param("staff")RlStaff staff);
 	/**
 	 * 添加员工
 	 * @param sysuser
 	 */
-	public int addSysStaff(RlStaff sysstaff) throws ResultException;
+	public int addRlStaff(RlStaff rlStaff) throws ResultException;
 	
 	/**
 	 * 根据身份证查询员工
-	 * @param sysStaff
+	 * @param RlStaff
 	 * @return
 	 */
-	public RlStaff findSysStaffByIdCard(RlStaff sysStaff);
+	public RlStaff findRlStaffByIdCard(RlStaff rlStaff);
 	
 	/**
 	 * 根据dbid查询员工
-	 * @param sysStaff
+	 * @param RlStaff
 	 * @return
 	 */
-	public RlStaff findSysStaffByDbid(RlStaff sysStaff);
+	public RlStaff findRlStaffByDbid(RlStaff rlStaff);
 	
 	
 	/**
@@ -45,7 +45,7 @@ public interface ISysStaffDao {
 	 * @return
 	 * @throws ResultException
 	 */
-	public int updateSysStaff(RlStaff staff) throws ResultException;
+	public int updateRlStaff(RlStaff staff) throws ResultException;
 	
 	/**
 	 * 更新员工姓名

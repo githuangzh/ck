@@ -27,4 +27,9 @@ public interface IUserService {
 	 * @return
 	 */
 	public SysUser findUserByDbid(SysUser user);
+	
+	
+	public Result  updatePassword(SysUser user,String newpwd);
+	
+	
 }
