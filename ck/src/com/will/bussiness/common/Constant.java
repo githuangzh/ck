@@ -70,6 +70,13 @@ public interface Constant {
 	public static final String ROLE_BOSS = "1001";
 	public static final String ROLE_MANAGER = "1002";
 	public static final String ROLE_EMPLOYEE = "1111";
+	
+	
+	/**启用*/
+	public static final int STATUS_ENABLED = 0;
+
+	/**禁用*/
+	public static final int STATUS_DISABLED = 1;
 
 	
 	

@@ -22,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.will.bussiness.common.Constant;
 import com.will.bussiness.system.entity.SysResource;
 import com.will.bussiness.system.entity.SysRole;
-import com.will.bussiness.system.entity.SysStaff;
 import com.will.bussiness.system.entity.SysUser;
 import com.will.bussiness.system.service.IProfileService;
 import com.will.bussiness.system.service.IResourceService;

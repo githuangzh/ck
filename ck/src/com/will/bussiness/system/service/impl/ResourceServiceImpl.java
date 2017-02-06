@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.will.bussiness.common.Constant;
 import com.will.bussiness.system.dao.ISysResourceDao;
 import com.will.bussiness.system.entity.SysResource;
-import com.will.bussiness.system.entity.SysStaff;
 import com.will.bussiness.system.entity.SysUser;
 import com.will.bussiness.system.service.IResourceService;
 import com.will.exception.ResultException;

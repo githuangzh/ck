@@ -1,11 +1,11 @@
-package com.will.bussiness.system.dao;
+package com.will.bussiness.ck.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.will.bussiness.system.entity.SysStaff;
+import com.will.bussiness.ck.entity.RlStaff;
 import com.will.bussiness.system.entity.SysUser;
 import com.will.exception.ResultException;
 import com.will.utility.Pagination;
@@ -18,26 +18,26 @@ public interface ISysStaffDao {
 	 * @param pagination
 	 * @return
 	 */
-	public List<SysStaff> findSysStaffByPage(@Param("page")Pagination<SysStaff> pagination,@Param("staff")SysStaff staff);
+	public List<RlStaff> findSysStaffByPage(@Param("page")Pagination<RlStaff> pagination,@Param("staff")RlStaff staff);
 	/**
 	 * 添加员工
 	 * @param sysuser
 	 */
-	public int addSysStaff(SysStaff sysstaff) throws ResultException;
+	public int addSysStaff(RlStaff sysstaff) throws ResultException;
 	
 	/**
 	 * 根据身份证查询员工
 	 * @param sysStaff
 	 * @return
 	 */
-	public SysStaff findSysStaffByIdCard(SysStaff sysStaff);
+	public RlStaff findSysStaffByIdCard(RlStaff sysStaff);
 	
 	/**
 	 * 根据dbid查询员工
 	 * @param sysStaff
 	 * @return
 	 */
-	public SysStaff findSysStaffByDbid(SysStaff sysStaff);
+	public RlStaff findSysStaffByDbid(RlStaff sysStaff);
 	
 	
 	/**
@@ -45,7 +45,7 @@ public interface ISysStaffDao {
 	 * @return
 	 * @throws ResultException
 	 */
-	public int updateSysStaff(SysStaff staff) throws ResultException;
+	public int updateSysStaff(RlStaff staff) throws ResultException;
 	
 	/**
 	 * 更新员工姓名
@@ -53,7 +53,7 @@ public interface ISysStaffDao {
 	 * @return
 	 * @throws ResultException
 	 */
-	public int updateSysUserName(SysStaff staff) throws ResultException;
+	public int updateSysUserName(RlStaff staff) throws ResultException;
 	
 	
 	/**
@@ -62,7 +62,7 @@ public interface ISysStaffDao {
 	 * @return
 	 * @throws ResultException
 	 */
-	public int updateStaffPay(SysStaff staff) throws ResultException;
+	public int updateStaffPay(RlStaff staff) throws ResultException;
 
 
 	/**
@@ -71,5 +71,5 @@ public interface ISysStaffDao {
 	 * @return
 	 * @throws ResultException
 	 */
-	public int removeStaff(SysStaff staff) throws ResultException;
+	public int removeStaff(RlStaff staff) throws ResultException;
 }

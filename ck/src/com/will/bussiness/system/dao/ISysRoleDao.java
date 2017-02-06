@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.will.bussiness.system.entity.SysResource;
 import com.will.bussiness.system.entity.SysRole;
-import com.will.bussiness.system.entity.SysStaff;
 import com.will.bussiness.system.entity.SysUser;
 import com.will.exception.ResultException;
 import com.will.utility.Pagination;
@@ -34,11 +33,13 @@ public interface ISysRoleDao {
 
 	public int addRoleWithResourceByArray(String[] resIds,@Param("role") SysRole sysRole) throws ResultException;;
 
-	public List<SysStaff> findRoleWithUser(SysRole sysRole);
+	public List<SysUser> findRoleWithUser(SysRole sysRole);
 
 	public List<SysResource> findRoleWithResurce(SysRole sysRole);
 
 	public SysRole findSysRoleByRoleid(SysRole sysRole);
 	
 	public SysRole findSysRoleByDbid(SysRole sysRole);
+	
+	public SysResource findSysResourcesByRoleid(SysRole sysRole);
 }

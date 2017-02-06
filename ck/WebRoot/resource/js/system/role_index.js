@@ -33,6 +33,10 @@ function updateResource(dbid){
 	openWinWith(url,0,500,120,750);
 };
 
+function authRole(dbid){
+	var url = __CONTEXT_PATH+""
+	openWinWith(null,0,500,120,750);
+}
 
 function openWinWith(url,id,width,top,left){
 		var addResourcemodal = $.scojs_modal({
@@ -98,7 +102,8 @@ $(function(){
         	valign: 'middle',
         	formatter:function(value,row,index){
         			return "<a class='t_operate' onclick='updateRole("+row.dbid+")'><i class='icon-edit'></i>编辑</a>"
-            	       +"<a class='t_operate' onclick='removeRole(this,"+row.dbid+")'><i class='icon-remove-sign' ></i>删除</a>" 
+        			   +"<a class='t_operate' onclick='authRole("+row.dbid+")'><i class='icon-book' ></i>授权</a>"
+            	       +"<a class='t_operate' onclick='removeRole(this,"+row.dbid+")'><i class='icon-remove-sign' ></i>删除</a>"
             },
         }]
 	});

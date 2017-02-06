@@ -7,11 +7,6 @@
 		<id column="dbid" property="dbid"/>
 	</resultMap>
 	<resultMap type="SysUser" id="userResult" autoMapping="true"></resultMap>
-	<resultMap type="SysStaff" id="staffResult" autoMapping="true">
-		<id property="dbid" column="dbid" />
-		<result property="userid" column="userid"/>
-		<association property="user" resultMap="userResult" columnPrefix="u_"></association>
-	</resultMap>
 	<resultMap type="SysResource" id="resources" autoMapping="true">
 		<id column="dbid" property="dbid" />
 		<result column="resid" property="resid"/>
@@ -80,7 +75,7 @@
 		</foreach>
 	</insert>
 	
-	<select id="findRoleWithUser" resultMap="staffResult">
+	<select id="findRoleWithUser" resultMap="userResult">
 		<![CDATA[SELECT userid from sys_user_role where roleid = #{roleid}]]>
 	</select>
 	
@@ -95,4 +90,5 @@
 	<select id="findSysRoleByDbid" resultType="SysRole">
 		<![CDATA[SELECT * FROM sys_role WHERE dbid = #{dbid}]]>
 	</select>
+	
 </mapper>

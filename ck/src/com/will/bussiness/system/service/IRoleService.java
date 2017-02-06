@@ -4,13 +4,22 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.will.bussiness.system.entity.SysResource;
 import com.will.bussiness.system.entity.SysRole;
-import com.will.bussiness.system.entity.SysStaff;
+
 import com.will.bussiness.system.entity.SysUser;
 import com.will.utility.Pagination;
 import com.will.utility.Result;
 
 
+/**
+ * @author Will
+ *
+ */
+/**
+ * @author Will
+ *
+ */
 public interface IRoleService {
 
 	

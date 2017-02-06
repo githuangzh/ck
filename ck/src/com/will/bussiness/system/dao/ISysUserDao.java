@@ -17,14 +17,22 @@ public interface ISysUserDao {
 	 * @return
 	 */
 	public SysUser findByUserid(String userid);
+	
+	/**
+	 * 查询用户
+	 * @param dbid
+	 * @return
+	 */
+	public SysUser findUserByDbid(int dbid);
 	/**
 	 * 查询用户--表格
 	 * @param pagination
 	 * @return
 	 */
-	public List<SysUser> findUserByPage(@Param("page")Pagination<SysUser> pagination);
+	public List<SysUser> findUserByPage(@Param("page")Pagination<SysUser> pagination,@Param("user")SysUser user);
+	
 	/**
-	 * 添加用户
+	 * 添加账号
 	 * @param sysuser
 	 */
 	public int addSysUser(SysUser sysuser) throws ResultException;
@@ -39,11 +47,19 @@ public interface ISysUserDao {
 	public int updateUserid(SysUser user) throws ResultException;
 	
 	/**
-	 * 移除用户
+	 * 修改账号
 	 * @param user
 	 * @return
 	 * @throws ResultException
 	 */
-	public int removeSysUser(SysUser user) throws ResultException;
+	public int updateSysUser(SysUser user)  throws ResultException;
+	
+	/**
+	 * 禁用账号
+	 * @param user
+	 * @return
+	 * @throws ResultException
+	 */
+	public int updateStatus(SysUser user) throws ResultException;
 	
 }

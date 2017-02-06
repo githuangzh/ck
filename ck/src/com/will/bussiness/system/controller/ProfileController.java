@@ -83,7 +83,6 @@ public class ProfileController {
 		request.getSession().setAttribute(Constant.SESSION_ROLOES, roles);
 		//资源列表
 		request.getSession().setAttribute("rlist", user.getResource());
-		System.out.println(user.getResource().toString());
 		for (SysRole sysRole : roles) {
 			if(sysRole.getRoleid().equals(Constant.ROLE_ADMIN)){
 				request.getSession().setAttribute("isadmin", "1");

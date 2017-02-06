@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.will.bussiness.system.entity.SysResource;
-import com.will.bussiness.system.entity.SysStaff;
 import com.will.bussiness.system.entity.SysUser;
 import com.will.exception.ResultException;
 import com.will.utility.Pagination;

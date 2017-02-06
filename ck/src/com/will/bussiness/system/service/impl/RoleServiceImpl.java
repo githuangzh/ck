@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 
 import com.filenet.api.core.Factory.User;
 import com.mysql.jdbc.jdbc2.optional.SuspendableXAConnection;
+import com.will.bussiness.ck.dao.ISysStaffDao;
 import com.will.bussiness.common.Constant;
+import com.will.bussiness.system.dao.ISysResourceDao;
 import com.will.bussiness.system.dao.ISysRoleDao;
-import com.will.bussiness.system.dao.ISysStaffDao;
 import com.will.bussiness.system.dao.ISysUserDao;
 import com.will.bussiness.system.entity.SysResource;
 import com.will.bussiness.system.entity.SysRole;
-import com.will.bussiness.system.entity.SysStaff;
 import com.will.bussiness.system.entity.SysUser;
 import com.will.bussiness.system.service.IRoleService;
 import com.will.bussiness.system.service.IUserService;
@@ -32,6 +32,10 @@ public class RoleServiceImpl implements IRoleService {
 	private static Logger logger = Logger.getLogger(RoleServiceImpl.class);
 	@Resource
 	private ISysRoleDao roleDao ;
+	@Resource
+	private ISysUserDao userDao;
+	@Resource
+	private ISysResourceDao resourceDao;
 	public Pagination<SysRole> findSysRoleByPage(
 			Pagination<SysRole> pagination, SysRole sysRole) {
 		pagination.setList(roleDao.findSysRoleByPage(pagination, sysRole));
@@ -88,8 +92,8 @@ public class RoleServiceImpl implements IRoleService {
 	public Result removeSysRole(SysRole sysRole) {
 		Result result = new Result("删除成功");
 		//判断角色下是否有用户。
-		List<SysStaff> staffs = roleDao.findRoleWithUser(sysRole);
-		if(staffs.size() > 0){
+		List<SysUser> users = roleDao.findRoleWithUser(sysRole);
+		if(users.size() > 0){
 			result = new Result(Result.FAILURE,Constant.RESULT_FAILD,"请先移除角色下用户");
 		}else{
 			//删除资源与角色关联表
@@ -99,7 +103,7 @@ public class RoleServiceImpl implements IRoleService {
 				logger.error(e.getMessage()+"\n=========请求资源失败,数据或数据库异常");
 				e.printStackTrace();
 			}
-			//删除资源
+			//删除角色
 			try {
 				roleDao.removeRole(sysRole);
 			} catch (ResultException e) {
@@ -145,13 +149,17 @@ public class RoleServiceImpl implements IRoleService {
 		//根据optid查询 0：查询用户下已有用户 1:查询用户下已有资源
 		if(optId == 0){
 			//查询用户
-			List<SysStaff> list = roleDao.findRoleWithUser(sysRole);
+			List<SysUser> list = roleDao.findRoleWithUser(sysRole);
+			for (int i = 0; i < list.size(); i++) {
+				SysUser user = list.get(i);
+				userDao.findByUserid(user.getUserid());
+			}
 			return list;
 		}else{
 			//查询资源
 			List<SysResource> list = roleDao.findRoleWithResurce(sysRole);
+			
 			return list;
 		}
 	}
-	
 }

@@ -2,33 +2,29 @@ package com.will.bussiness.system.service;
 
 import org.springframework.stereotype.Service;
 
-import com.will.bussiness.system.entity.SysStaff;
+import com.will.bussiness.system.entity.SysUser;
 import com.will.utility.Pagination;
 import com.will.utility.Result;
 
 public interface IUserService {
-	public Pagination<SysStaff> findSysStaffByPage(Pagination<SysStaff> pagination,SysStaff staff);
 	/**
-	 * 添加用户
-	 * @param sysstaff
+	 * 
+	 * @param pagination
+	 * @param user
 	 * @return
 	 */
-	public Result addSysStaff(SysStaff sysstaff);
-	
+	public Pagination<SysUser> findSysUserByPage(Pagination<SysUser> pagination,SysUser user);
+
 	/**
-	 * 根据dbid查询用户
-	 * @param staff
+	 * 修改添加用户
+	 * @param user
 	 * @return
 	 */
-	public SysStaff findSysStaffByDbid(SysStaff staff);
-	
-	
+	public Result addSysUser(SysUser user);
 	/**
-	 * 删除员工
-	 * @param staff
+	 * 查询用户--根据dbid
+	 * @param user
 	 * @return
 	 */
-	public Result RemoveSysStaff(SysStaff staff);
-	
-	public Result UpdateSysStaffPay(SysStaff staff);
+	public SysUser findUserByDbid(SysUser user);
 }

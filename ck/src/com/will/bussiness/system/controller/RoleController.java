@@ -45,6 +45,12 @@ public class RoleController {
 		return "system/role/role_index";
 	}
 	
+	@RequestMapping("/roleauth.html")
+	public String roleauth(HttpServletRequest request,SysRole sysRole){
+		rolesrv.findRoleWithUserOrResource(sysRole, 1);
+		return "system/role/role_auth";
+	}
+	
 	@RequestMapping("/list.json")
 	@ResponseBody
 	public Map<String, Object> getAllRoles(HttpServletRequest request,Pagination<SysRole> pagination,

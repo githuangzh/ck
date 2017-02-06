@@ -14,22 +14,42 @@
 		<where>userid = #{userid}</where>
 	</select>
 	
-	<select id="findUserByPage" resultType="SysUser">
+	<select id="findUserByDbid" resultType="SysUser">
 		SELECT * FROM SYS_USER
+		<where>dbid = #{dbid}</where>
+	</select>
+	
+	<select id="findUserByPage" resultType="userResult">
+		<![CDATA[SELECT T.dbid,T.userid,T.staffid,T.status FROM SYS_USER T]]>
+		<where>
+			<if test="user.userid != null">
+				T.userid LIKE CONCAT('%',#{user.userid},'%')
+			</if>
+			<if test="user.staffid != null">
+				T.staffid LIKE CONCAT('%',#{user.staffid},'%')
+			</if>
+		</where>
 	</select>
 	
 	<update id="updateUserid" parameterType="SysUser">
 		UPDATE sys_user set userid = #{userid} where dbid = #{dbid} 
 	</update>
 	
+	<update id="updateSysUser" parameterType="SysUser">
+		UPDATE SYS_USER SET USERID = #{userid},STAFFID = #{staffid},PASSWORD = #{password},STATUS = #{status}
+		<where>
+			dbid = #{dbid}
+		</where>
+	</update>
+	
 	<insert id="addSysUser" useGeneratedKeys="true" parameterType="SysUser">
 		<selectKey keyProperty="dbid" resultType="int"  order="AFTER">
 			<![CDATA[SELECT LAST_INSERT_ID()]]>
 		</selectKey>
-		<![CDATA[INSERT INTO sys_user VALUES(#{dbid},#{userid},#{username},#{password})]]>
+		<![CDATA[INSERT INTO sys_user VALUES(#{dbid},#{userid},#{staffid},#{password},#{status})]]>
 	</insert>
 	
-	<delete id="removeSysUser" parameterType="SysUser">
-		<![CDATA[DELETE FROM sys_user where userid = #{userid}]]>
+	<delete id="updateStatus" parameterType="SysUser">
+		<![CDATA[UPDATE SYS_USER SET STATUS =#{status} WHERE USERID = #{userid}]]>
 	</delete>
 </mapper>

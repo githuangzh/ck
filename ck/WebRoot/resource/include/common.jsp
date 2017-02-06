@@ -11,6 +11,7 @@ String commonContextPath = contextPath+"/resource";
 <link rel="stylesheet" type="text/css" href="<%=commonContextPath%>/css/scojs.css" />
 <link rel="stylesheet" type="text/css" href="<%=commonContextPath%>/css/sco.message.css" />
 <link rel="stylesheet" type="text/css" href="<%=commonContextPath%>/css/bootstrap-table.min.css" />
+<link rel="stylesheet" type="text/css" href="<%=commonContextPath%>/css/zTreeStyle/zTreeStyle.css" />
 
 <style type="text/css">
 	html{overflow-x:hidden; overflow-y:auto;}
@@ -45,6 +46,9 @@ var __fullPath="<%=request.getScheme() + "://" + request.getHeader("host") +  re
 		<script type="text/javascript" src="<%=commonContextPath%>/js/sco/sco.tab.js"></script>
 		<script type="text/javascript" src="<%=commonContextPath%>/js/sco/sco.tooltip.js"></script>
 		<script type="text/javascript" src="<%=commonContextPath%>/js/sco/sco.valid.js"></script>
+		
+		<!-- ztree组件 -->
+		<script type="text/javascript" src="<%=commonContextPath%>/js/jquery.ztree.all.min.js"></script>
 <!-- 模态框模板  -->
 <div class="modal fade" id="modal_hzh" style="display:none">
         <div class="modal-header">
@@ -62,7 +66,6 @@ var __fullPath="<%=request.getScheme() + "://" + request.getHeader("host") +  re
 
 
 <!-- 提示框模板 -->
-
 <div id="confirm_hzh">
 	<div class="popover">
 		<div class="arrow"></div>
